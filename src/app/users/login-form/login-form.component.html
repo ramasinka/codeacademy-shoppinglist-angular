@@ -1,0 +1,73 @@
+<!-- Top content -->
+<div class="top-content " style="color: white">
+  <div class="inner-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 text">
+          <h1><strong>CodeAcademy</strong> Login Form</h1>
+          <div class="description">
+            <p>
+              This is a free shopping list application.
+              For more information <a href="http://codeacademy.lt"><strong>click here:
+              CodeAcademy</strong></a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <form [formGroup]="form" (ngSubmit)="onLogin(f)" #f="ngForm">
+
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-3 form-box">
+            <div class="form-top">
+              <div class="form-top-left">
+                <h3>Login to our site</h3>
+                <p>Enter your username and password to log on:</p>
+              </div>
+              <div style="color: white" class="form-top-right">
+                <i class="fa fa-key"></i>
+              </div>
+            </div>
+            <div class="form-bottom">
+              <div class="form-group">
+                <label class="sr-only" for="user_name">Username</label>
+                <input style="color: white" type="text" name="username" placeholder="Username..."
+                       class="form-username form-control" id="user_name" [(ngModel)]="loginData.username"
+                       formControlName="name">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="user_password">Password</label>
+                <input style="color: white" type="password" name="password" placeholder="Password..."
+                       class="form-password form-control" id="user_password" [(ngModel)]="loginData.password"
+                       formControlName="name">
+              </div>
+              <input type="hidden" name="${_csrf.parameterName}"
+                     value="${_csrf.token}"/>
+              <div class="row">
+                <button (click)="onLogin()" class="btn" type="submit">Login</button>
+                <button type="button" class="btn" routerLink="/signUp">Register</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 social-login">
+          <h3>...or login with:</h3>
+          <div class="social-login-buttons">
+            <form action="/login/facebook" method="POST">
+              <input type="hidden" name="scope" value="public_profile"/>
+              <input type="submit" value="Login using Facebook" class="btn btn-primary"/>
+            </form>
+            <a class="btn btn-link-1 btn-link-1-twitter" href="#">
+              <i class="fa fa-twitter"></i> Twitter
+            </a>
+            <a class="btn btn-link-1 btn-link-1-google-plus" href="#">
+              <i class="fa fa-google-plus"></i> Google Plus
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
