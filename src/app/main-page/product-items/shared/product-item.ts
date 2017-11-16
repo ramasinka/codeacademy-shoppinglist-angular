@@ -1,5 +1,5 @@
 
-import {ShoppingList} from '../../../shopping-lists/shared/shopping-list'
+import {ShoppingList} from '../../shopping-lists/shared/shopping-list'
 
 export class ProductItem{
    id: number;

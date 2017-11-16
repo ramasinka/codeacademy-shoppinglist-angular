@@ -1,32 +1,80 @@
-<div class="top-content" style="color: white">
-
+<div class="top-content " style="color: white">
   <div class="inner-bg">
     <div class="container" style="margin-top: 100px">
-      <form>
-        <p class="h5 text-center mb-4">User registration</p>
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 form-box">
+          <form [formGroup]="registerForm" (ngSubmit)="onRegister(f)" #f="ngForm">
+            <p class="h2 text-center mb-4">User registration</p>
+            <div class="md-form">
+              <div class="form-group">
+                <i class="fa fa-user prefix light-blue-text "></i>
+                <!--<input type="text" id="user_name" class="form-username form-control" mdbActive-->
+                <!--[(ngModel)]="registerData.username" formControlName="name">-->
+                <input id="name" class="form-username form-control"
+                       formControlName="name" required mdbActive>
+                <label for="name" style="color: white">Your
+                  name</label>
 
-        <div class="md-form">
-          <i class="fa fa-user prefix light-blue-text"></i>
-          <input type="text" id="orangeForm-name" class="form-control" mdbActive>
-          <label for="orangeForm-name">Your name</label>
-        </div>
-        <div class="md-form">
-          <i class="fa fa-envelope prefix light-blue-text"></i>
-          <input type="text" id="orangeForm-email" class="form-control" mdbActive>
-          <label for="orangeForm-email">Your email</label>
-        </div>
+                <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                     class="alert alert-danger">
 
-        <div class="md-form">
-          <i class="fa fa-lock prefix light-blue-text"></i>
-          <input type="password" id="orangeForm-pass" class="form-control" mdbActive>
-          <label for="orangeForm-pass">Your password</label>
-        </div>
+                  <div *ngIf="name.errors.required">
+                    Name is required.
+                  </div>
+                  <div *ngIf="name.errors.minlength">
+                    Name must be at least 4 characters long.
+                  </div>
 
-          <div class="text-center">
-            <button class="btn btn-deep-orange waves-light" mdbRippleRadius>Sign up</button>
-            <button class="btn btn-deep-orange waves-light" routerLink="/" mdbRippleRadius>Back to login</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="md-form">
+              <div class="form-group">
+                <i class="fa fa-envelope prefix light-blue-text"></i>
+                <input id="email" class="form-username form-control" mdbActive
+                       formControlName="email" required>
+                <!--<input type="text"-->
+                <!--id="email"-->
+                <!--name="email"-->
+                <!--formControlName="email" required-->
+                <!--[(ngModel)]="registerData.email"-->
+                <!--class="form-username form-control" mdbActive>-->
+                <label for="email" style="color: white">Your email</label>
+                <div *ngIf="registerForm.hasError('email', 'email') && registerForm.get('email').touched"
+                     class="alert alert-danger">
+                  Please enter the correct email, this email not valid.
+                </div>
+              </div>
+            </div>
+            <div class="md-form">
+              <div class="form-group">
+                <i class="fa fa-lock prefix light-blue-text"></i>
+                <input type="password" id="password" class="form-password form-control" mdbActive
+                       formControlName="password" required>
+                <!--<input type="password" id="user_password" class="form-username form-control" mdbActive-->
+                <!--[(ngModel)]="registerData.password" formControlName="password">-->
+                <label for="password" style="color: white">Your
+                  password</label>
+                <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                     class="alert alert-danger">
+
+                  <div *ngIf="password.errors.required">
+                    Name is required.
+                  </div>
+                  <div *ngIf="password.errors.minlength">
+                    Password must be at least 6 characters long.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <button class="btn" mdbRippleRadius>Sign up</button>
+              <button class="btn waves-light" routerLink="/" mdbRippleRadius>Back to login</button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>

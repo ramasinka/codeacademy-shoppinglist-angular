@@ -6,21 +6,26 @@ import {UsersComponent} from './users/users.component'
 import {MainPageComponent} from './main-page/main-page.component'
 import {ShoppingListsComponent} from './main-page/shopping-lists/shopping-lists.component';
 import {ShareHistoriesComponent} from './main-page/share-histories/share-histories.component';
-
+import {ShoppingListFormComponent} from "./main-page/shopping-lists/shopping-list-form/shopping-list-form.component";
 
 
 const APP_Routes: Routes = [
 
-{path: '', component: LoginFormComponent},
+  {path: '', component: LoginFormComponent},
 
-{path: 'signUp', component: RegistrationFormComponent},
+  {path: 'signUp', component: RegistrationFormComponent},
 
-{path: 'main', component: MainPageComponent},
+  {path: 'main', component: MainPageComponent},
 
-{path: 'lists', component: ShoppingListsComponent},
+  {
+    path: 'lists', component: ShoppingListsComponent,
+    children: [
+      {path: 'new', component: ShoppingListFormComponent},
+      {path: 'edit/:id', component: ShoppingListFormComponent}
+    ]
+  },
 
-{path: 'shareHistory', component: ShareHistoriesComponent},
+  {path: 'shareHistory', component: ShareHistoriesComponent},
 
-
-]
+];
 export const routing: ModuleWithProviders = RouterModule.forRoot(APP_Routes);

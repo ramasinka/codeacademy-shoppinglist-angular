@@ -1,26 +1,80 @@
-import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import {Injectable} from '@angular/core';
+import {Http, Response, URLSearchParams} from '@angular/http';
 import 'rxjs/Rx';
-import { Observable } from 'rxjs';
-import { ShoppingList } from './shopping-list';
-import { RequestOptions } from '@angular/http';
-import { HeaderService } from '../../headers/shared/header.service'
+import {Observable} from 'rxjs';
+import {HeaderService} from '../../headers/shared/header.service';
+import {ShoppingList} from './shopping-list';
+import {CookieService} from 'ngx-cookie-service';
+import {User} from '../../../users/shared/user';
+import {UsersService} from '../../../users/shared/user.service';
+
 
 @Injectable()
 
 export class ShoppingListService {
-  private backEndUrl: string = "http://localhost:8084";
+  private backEndUrl = 'http://localhost:8084';
+  private shoppingList: ShoppingList = new ShoppingList();
+  private user: User = new User();
 
   constructor(private http: Http,
-    private headerService: HeaderService) { }
+              private cookieService: CookieService,
+              private userService: UsersService,
+              private headerService: HeaderService) {
+  }
 
   getAllShoppingLists(): Observable<any> {
-    console.log(localStorage.getItem('access_token'));
-     var headers = new Headers({'Content-type': 'application/x-www-form-urlencoded; charset=utf-8', 'Authorization': 'Bearer '+localStorage.getItem('access_token')});
-    var options = new RequestOptions({ headers: headers });
-    console.log(options);
+    const options = this.headerService.addTokenToHeader();
     return this.http.get(this.backEndUrl + '/getShoppingLists', options)
-      .map((response: Response) => { return response.json() });
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
+
+  getShoppingListById(id: number): Observable<any> {
+    const options = this.headerService.addTokenToHeader();
+    return this.http.get(this.backEndUrl + '/getShoppingList/' + id, options)
+      .map(
+        (response: Response) => {
+          return response.json();
+        }
+      );
+  }
+
+  updateShoppingList(shoppingList: ShoppingList) {
+    const options = this.headerService.addTokenToHeader();
+    this.http.post(this.backEndUrl + '/updateShoppingList/', shoppingList, options
+    )
+      .map(
+        (response: Response) => {
+          return response.json();
+        }
+      );
+  }
+
+  createShoppingList(shoppingList: ShoppingList) {
+
+    this.user.id = this.cookieService.get('user_id');
+    this.shoppingList.userId = this.user.id;
+
+    const urlParams = new URLSearchParams();
+    urlParams.set('listName', shoppingList.name);
+    urlParams.set('userId', this.user.id);
+
+    const requestOption = this.headerService.addTokenToHeader();
+    requestOption.params = urlParams;
+    return this.http.post(this.backEndUrl + '/createShoppingList', '', requestOption)
+      .map(
+        (response: Response) => {
+          return true;
+        });
+  }
+
+  getShoppingListsByUser(userId: number) {
+    const options = this.headerService.addTokenToHeader();
+    return this.http.get(this.backEndUrl + '/getShoppingLists/' + userId, options)
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 
   // createUser(user) {

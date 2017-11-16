@@ -1,7 +1,7 @@
-import {User} from '../../users/shared/user'
+import {User} from '../../users/shared/user';
 
 export class Role {
-	id: any;
-	name: String;
+  private id: any;
+  private name: String;
   public users: User[];
 }

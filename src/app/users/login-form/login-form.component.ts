@@ -1,11 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators, FormsModule} from '@angular/forms';
-
-import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {User} from '../shared/user';
-import {UsersService} from '../shared/user.service';
-import {RegistrationFormComponent} from '../registration-form/registration-form.component'
-import {AuthorizationService} from '../authorization/shared/authorization.service'
+import {AuthorizationService} from '../authorization/shared/authorization.service';
 
 // import { AppService } from '../../shared/app.service';
 
@@ -15,17 +11,13 @@ import {AuthorizationService} from '../authorization/shared/authorization.servic
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit {
-  private access_token: any;
   public loginData = {username: '', password: ''};
   form: FormGroup;
   title: string;
   user: User = new User();
 
   constructor(formBuilder: FormBuilder,
-              private usersService: UsersService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private authorizationService: AuthorizationService,) {
+              private authorizationService: AuthorizationService) {
 
     this.form = formBuilder.group(
       {
@@ -38,12 +30,10 @@ export class LoginFormComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   onLogin(http) {
     this.authorizationService.obtainAccessToken(this.loginData);
-    console.log(this.loginData);
-    // const access_token = localStorage.getItem('access_token');
-    // this.router.navigate(['main']);
   }
 }
